@@ -1,31 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".MainActivity" android:id="@+id/linearLayout" android:orientation="vertical">
-    <Button
-            android:text="Change Image"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:id="@+id/btn" android:onClick="clickImg"/>
     <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/linearLayoutContentImg">
-        <!--<LinearLayout-->
-                <!--android:orientation="horizontal"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content" android:id="@+id/linearLayoutImg">-->
-            <!--<ImageView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:src="@drawable/xuka"-->
-                <!--android:onClick="clickImg"-->
-                <!--android:layout_height="150dp" tools:srcCompat="@tools:sample/avatars"-->
-                <!--android:id="@+id/img" android:layout_weight="1" android:paddingTop="5dp"-->
-                <!--android:paddingBottom="5dp" android:tag="card_1"/>-->
-        <!--</LinearLayout>-->
-    </LinearLayout>
-</LinearLayout>
+            android:id="@+id/linearLayoutContentImg"
+            tools:layout_editor_absoluteX="-5dp"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+            android:clipToPadding="false" android:paddingTop="10dp"/>
+    <Button
+            android:text="Restart Game"
+            android:background="@drawable/btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:id="@+id/btn" android:onClick="restartLayout"
+            android:textColor="#fff" tools:layout_editor_absoluteX="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayoutContentImg" app:layout_constraintVertical_bias="1.0"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

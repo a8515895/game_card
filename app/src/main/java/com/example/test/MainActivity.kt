@@ -9,16 +9,19 @@ import android.widget.LinearLayout
 import android.app.ActionBar.LayoutParams
 import android.util.Log
 import kotlinx.android.synthetic.main.activity_main.*
-import java.util.Arrays
 import android.view.Menu
 import android.widget.Toast
 import java.util.Timer
 import kotlin.concurrent.schedule
 import android.os.CountDownTimer
+import android.widget.TextView
+import androidx.core.view.ViewCompat
+
 class MainActivity : AppCompatActivity() {
     protected val arrImg = ArrayList<String>()
     var arrRandomImg = ArrayList<String>()
     var _result = ArrayList<Int>()
+    var _clicked : Boolean = true
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -26,14 +29,15 @@ class MainActivity : AppCompatActivity() {
 
     }
     fun clickImg(view : View){
+        if(!_clicked){
+            return;
+        }
         val img : ImageView = view as ImageView
         val imgName = img.tag
         val imgId = getResources().getIdentifier(imgName.toString(),"drawable",packageName)
         img.setImageResource(imgId)
         _result.add(img.id);
         checkResult()
-//        Log.d("ID",img.id.toString())
-//        Toast.makeText(this,img.id.toString(),Toast.LENGTH_SHORT).show();
     }
     fun checkResult(){
         var img : ImageView;
@@ -41,6 +45,7 @@ class MainActivity : AppCompatActivity() {
         var r : ArrayList<String> = ArrayList();
 
         if(_result.size == 2) {
+            _clicked = false;
             for (x in 0 until _result.size) {
                 img = findViewById(_result[x]);
                 r.add(x,img.tag.toString())
@@ -59,6 +64,7 @@ class MainActivity : AppCompatActivity() {
                         }else{
                             img.setImageResource(R.drawable.magic)
                         }
+                        _clicked = true;
 
                     }
                     for (x in 0 until _result.size) {
@@ -83,6 +89,8 @@ class MainActivity : AppCompatActivity() {
     fun init(){
         var parents : LinearLayout;
         _randomImage(6)
+        initBgGame()
+        createTimeView()
         for (x in 0 until 2){
             parents = LinearLayout(this@MainActivity);
             parents.setLayoutParams(LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
@@ -90,7 +98,17 @@ class MainActivity : AppCompatActivity() {
             createImageView(parents,x)
             linearLayoutContentImg.addView(parents)
         }
-
+    }
+    fun createTimeView(){
+        var tv : TextView = TextView(this)
+        tv.text = "1 : 00"
+        tv.id = R.id.tv
+        tv.textAlignment = View.TEXT_ALIGNMENT_CENTER
+        linearLayoutContentImg.addView(tv)
+    }
+    fun restartLayout(v : View){
+        linearLayoutContentImg.removeAllViews()
+        init()
     }
     fun initImg(){
         arrImg.add("nobita")
@@ -99,6 +117,12 @@ class MainActivity : AppCompatActivity() {
         arrImg.add("xuka")
         arrImg.add("doreamon")
         arrImg.add("doreamon")
+    }
+    fun initBgGame(){
+        val ran : Random = Random
+        val i = ran.nextInt(1,10)
+        val imgId = getResources().getIdentifier("g"+i,"drawable",packageName)
+        linearLayoutContentImg.setBackgroundResource(imgId)
     }
     fun createImageView(layout : LinearLayout,index : Int){
         var img : ImageView
